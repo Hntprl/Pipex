@@ -1,25 +1,25 @@
 
-NAME = pipex.a
+NAME = pipex
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-LIB = ar rcs
 RM = rm -f
 
-SRC	= pipex.c pipex_utils.c ft_split.c \
+CRS = Mandatory/pipex.c pipex_utils.c ft_split.c \
 
-SRC_OBJ = $(SRC:.c=.o)
+OCRS = $(CRS:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(SRC_OBJ)
-	$(LIB) $(NAME) $(SRC_OBJ) $(NAME)
-
 clean:
-	$(RM) $(SRC_OBJ)
+	$(RM) $(CRS:.c=.o)
 
 fclean: clean
 	$(RM) $(NAME)
 
 re: fclean all
 
-.SILENT:
+$(NAME): $(CRS:.c=.o)
+
+.c.o :
+	$(CC) $(CFLAGS) -c $< -o $@
+	ar rcs $(NAME) $@

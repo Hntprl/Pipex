@@ -6,20 +6,16 @@
 /*   By: amarouf <amarouf@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 00:16:54 by amarouf           #+#    #+#             */
-/*   Updated: 2024/02/16 00:25:23 by amarouf          ###   ########.fr       */
+/*   Updated: 2024/02/20 12:55:17 by amarouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void ft_free(char **str)
+void	close_fd(int fd[2])
 {
-	int i;
-
-	i = 0;
-	while (str[i])
-		free(str[i ++]);
-	free(str);
+	close(fd[0]);
+	close(fd[1]);
 }
 
 size_t	ft_strlen(const char *str)
