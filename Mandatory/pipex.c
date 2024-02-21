@@ -6,7 +6,7 @@
 /*   By: amarouf <amarouf@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 00:16:27 by amarouf           #+#    #+#             */
-/*   Updated: 2024/02/20 12:56:12 by amarouf          ###   ########.fr       */
+/*   Updated: 2024/02/21 02:28:52 by amarouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int	main(int argc, char **argv, char **envp)
 	int	pid1;
 
 	if (access(argv[1], F_OK) == -1)
-		exit(write(2, "No such file or directory!\n", 28));
+		write(2, "No such file or directory!\n", 28);
 	if (argc < 5)
 		return (write (2, "Enter: <file1 cmd1 cmd2 file2!>\n", 32));
 	if (pipe(fd) == -1)

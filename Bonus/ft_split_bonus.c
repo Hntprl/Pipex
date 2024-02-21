@@ -6,17 +6,11 @@
 /*   By: amarouf <amarouf@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 15:27:58 by amarouf           #+#    #+#             */
-/*   Updated: 2024/02/19 03:08:59 by amarouf          ###   ########.fr       */
+/*   Updated: 2024/02/21 02:34:08 by amarouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
-
-void	close_fd(int fd[2])
-{
-	close(fd[0]);
-	close(fd[1]);
-}
 
 static void	free_strings(char **strings)
 {

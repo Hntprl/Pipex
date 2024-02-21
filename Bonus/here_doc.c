@@ -6,11 +6,33 @@
 /*   By: amarouf <amarouf@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 00:57:39 by amarouf           #+#    #+#             */
-/*   Updated: 2024/02/20 00:57:42 by amarouf          ###   ########.fr       */
+/*   Updated: 2024/02/21 13:40:06 by amarouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
+
+void	close_fd(int fd[2])
+{
+	close(fd[0]);
+	close(fd[1]);
+}
+
+char	*ft_findpath(char **envp)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (envp[i] != NULL)
+	{
+		if (ft_strnstr(envp[i], "PATH", 4) != NULL)
+			return ((envp[i] + 5));
+		i ++;
+	}
+	return (NULL);
+}
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
@@ -32,23 +54,25 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	return (0);
 }
 
-void ft_here_dock(int argc, char **argv, int fd[2])
+void	ft_here_dock(int argc, char **argv, int fd[2])
 {
-    char *str;
+	char	*str;
 
-    str = NULL;
-    if (argc < 6)
-        (close_fd(fd), exit(EXIT_FAILURE));
-    if (fork() == 0)
-    {
-       while (1)
-        {
-            str = get_next_line(0);
-            if (ft_strncmp(str, argv[2], ft_strlen(argv[2])) == 0)
-                (free(str), close_fd(fd));
-            exit(1);
-        } 
-        write(fd[1], str, ft_strlen(str));
-        free(str);
-    }   
+	str = NULL;
+	if (argc < 6)
+		(close_fd(fd), exit(EXIT_FAILURE));
+	if (fork() == 0)
+	{
+		while (1)
+		{
+			str = get_next_line(0);
+			if (ft_strncmp(str, argv[2], ft_strlen(argv[2])) == 0)
+			{
+				(free(str), close_fd(fd));
+				exit(1);
+			}
+			write(fd[1], str, ft_strlen(str));
+		}
+		free(str);
+	}
 }
