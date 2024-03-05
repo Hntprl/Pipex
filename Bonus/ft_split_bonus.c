@@ -6,13 +6,13 @@
 /*   By: amarouf <amarouf@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 15:27:58 by amarouf           #+#    #+#             */
-/*   Updated: 2024/02/21 02:34:08 by amarouf          ###   ########.fr       */
+/*   Updated: 2024/02/22 06:30:23 by amarouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-static void	free_strings(char **strings)
+void	free_strings(char **strings)
 {
 	int	i;
 

@@ -6,7 +6,7 @@
 /*   By: amarouf <amarouf@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 00:16:42 by amarouf           #+#    #+#             */
-/*   Updated: 2024/02/21 13:35:03 by amarouf          ###   ########.fr       */
+/*   Updated: 2024/02/22 06:30:55 by amarouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <sys/wait.h>
 # include <limits.h>
 
-void	ft_free(char **str);
+void	free_strings(char **strings);
 void	ft_here_dock(int argc, char **argv, int fd[2]);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strjoin(char const *s1, char const *s2);

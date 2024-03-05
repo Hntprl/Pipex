@@ -6,7 +6,7 @@
 /*   By: amarouf <amarouf@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 00:57:49 by amarouf           #+#    #+#             */
-/*   Updated: 2024/02/21 13:43:20 by amarouf          ###   ########.fr       */
+/*   Updated: 2024/02/24 22:14:56 by amarouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ char	*ft_checkaccess(char **envp, char *cmd)
 	int		i;
 	char	**allpaths;
 	char	*path;
+	char	*leakpath;
 
 	i = 0;
 	allpaths = ft_split(ft_findpath(envp), ':');
@@ -24,18 +25,17 @@ char	*ft_checkaccess(char **envp, char *cmd)
 		exit(EXIT_FAILURE);
 	while (allpaths[i] != NULL)
 	{
-		if (access(ft_strjoin(allpaths[i], cmd), F_OK) == 0)
+		leakpath = ft_strjoin(allpaths[i], cmd);
+		if (access(leakpath, F_OK) == 0)
 		{
-			path = malloc(ft_strlen(allpaths[i]));
-			if (path == NULL)
-				exit(EXIT_FAILURE);
+			free(leakpath);
 			path = ft_strdup(allpaths[i]);
-			return (ft_free(allpaths), path);
+			return (free_strings(allpaths), path);
 		}
+		free(leakpath);
 		i ++;
 	}
-	ft_free(allpaths);
-	write(2, "Command not found !\n", 20);
+	free_strings(allpaths);
 	return (NULL);
 }
 
@@ -45,6 +45,8 @@ void	ft_first_command(char **argv, char **envp, int fd[2])
 	char	*cmd2;
 	int		fl;
 
+	if (!argv[2][0])
+		exit(write(2, "Enter a command !\n", 18));
 	if (fork() == 0)
 	{
 		fl = open (argv[1], O_RDONLY);
@@ -54,7 +56,12 @@ void	ft_first_command(char **argv, char **envp, int fd[2])
 		(close_fd(fd), close(fl));
 		cmd1 = ft_split(argv[2], ' ');
 		cmd2 = ft_strjoin("/", cmd1[0]);
-		if (!cmd2)
+		if (ft_checkaccess(envp, cmd2) == NULL)
+		{
+			(free_strings(cmd1), free(cmd2));
+			exit(write(2, "command not found!\n", 19));
+		}
+		if (!cmd1 || !cmd2)
 			exit(write (2, "Wrong Command!\n", 15));
 		execve(ft_strjoin(ft_checkaccess(envp, cmd2), cmd2), cmd1, envp);
 		exit(1);
@@ -66,6 +73,8 @@ void	ft_all_commands(char *cmd, char **envp, int fd[2])
 	char	**cmd1;
 	char	*cmd2;
 
+	if (!cmd[0])
+		exit(write(2, "Enter a command !\n", 18));
 	if (fork() == 0)
 	{
 		if (dup2(fd[1], 1) == -1)
@@ -73,7 +82,12 @@ void	ft_all_commands(char *cmd, char **envp, int fd[2])
 		close_fd(fd);
 		cmd1 = ft_split(cmd, ' ');
 		cmd2 = ft_strjoin("/", cmd1[0]);
-		if (!cmd || !cmd2)
+		if (ft_checkaccess(envp, cmd2) == NULL)
+		{
+			(free_strings(cmd1), free(cmd2));
+			exit(write(2, "command not found!\n", 19));
+		}
+		if (!cmd1 || !cmd2)
 			(exit(write (2, "Wrong Command!\n", 15)), close_fd(fd));
 		execve(ft_strjoin(ft_checkaccess(envp, cmd2), cmd2), cmd1, envp);
 		exit(1);
@@ -88,6 +102,8 @@ void	ft_last_command(char **argv, char **envp, int argc, int fd[2])
 	int		fl;
 
 	cmd = argv[argc - 2];
+	if (!cmd[0])
+		exit(write(2, "Enter a command !\n", 18));
 	if (fork() == 0)
 	{
 		fl = open (argv[argc - 1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
@@ -96,7 +112,12 @@ void	ft_last_command(char **argv, char **envp, int argc, int fd[2])
 		(dup2(fl, 1), close(fl));
 		cmd1 = ft_split(cmd, ' ');
 		cmd2 = ft_strjoin("/", cmd1[0]);
-		if (!cmd || !cmd2)
+		if (ft_checkaccess(envp, cmd2) == NULL)
+		{
+			(free_strings(cmd1), free(cmd2));
+			exit(write(2, "command not found!\n", 19));
+		}
+		if (!cmd1 || !cmd2)
 			(exit(write (2, "Wrong Command!\n", 15)), close_fd(fd));
 		close_fd(fd);
 		execve(ft_strjoin(ft_checkaccess(envp, cmd2), cmd2), cmd1, envp);

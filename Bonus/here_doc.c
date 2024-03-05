@@ -6,7 +6,7 @@
 /*   By: amarouf <amarouf@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 00:57:39 by amarouf           #+#    #+#             */
-/*   Updated: 2024/02/21 13:40:06 by amarouf          ###   ########.fr       */
+/*   Updated: 2024/03/05 21:20:40 by amarouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,8 @@ void	close_fd(int fd[2])
 char	*ft_findpath(char **envp)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	j = 0;
 	while (envp[i] != NULL)
 	{
 		if (ft_strnstr(envp[i], "PATH", 4) != NULL)
@@ -72,7 +70,7 @@ void	ft_here_dock(int argc, char **argv, int fd[2])
 				exit(1);
 			}
 			write(fd[1], str, ft_strlen(str));
+			free(str);
 		}
-		free(str);
 	}
 }
