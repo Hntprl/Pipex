@@ -6,7 +6,7 @@
 /*   By: amarouf <amarouf@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 00:16:42 by amarouf           #+#    #+#             */
-/*   Updated: 2024/02/20 12:57:37 by amarouf          ###   ########.fr       */
+/*   Updated: 2024/03/06 18:18:22 by amarouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,12 @@ char	**ft_split(char const *s, char c);
 size_t	ft_strlen(const char *str);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
+
+typedef struct var
+{
+	int	fd[2];
+	int	pid;
+	int	pid1;
+}	t_var;
+
 #endif
