@@ -6,7 +6,7 @@
 /*   By: amarouf <amarouf@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 00:16:27 by amarouf           #+#    #+#             */
-/*   Updated: 2024/03/06 18:16:49 by amarouf          ###   ########.fr       */
+/*   Updated: 2024/03/06 23:12:04 by amarouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	ft_command2(char **argv, char **envp, int fd[2])
 	(close (fl2), close_fd(fd));
 	cmd = ft_split(argv[3], ' ');
 	if (!cmd[0])
-		exit(write(2, "command not found!\n", 19));
+		(free(cmd), exit(write(2, "command not found!\n", 19)));
 	cmd2 = ft_strjoin("/", cmd[0]);
 	if (ft_checkaccess(envp, cmd2) == NULL)
 	{
@@ -95,7 +95,7 @@ void	ft_command1(char **argv, char **envp, int fd[2])
 	close_fd(fd);
 	cmd = ft_split(argv[2], ' ');
 	if (!cmd[0])
-		exit(write(2, "command not found!\n", 19));
+		(free(cmd), exit(write(2, "command not found!\n", 19)));
 	cmd2 = ft_strjoin("/", cmd[0]);
 	if (ft_checkaccess(envp, cmd2) == NULL)
 	{

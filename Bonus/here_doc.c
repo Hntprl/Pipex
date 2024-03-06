@@ -6,7 +6,7 @@
 /*   By: amarouf <amarouf@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 00:57:39 by amarouf           #+#    #+#             */
-/*   Updated: 2024/03/06 17:20:24 by amarouf          ###   ########.fr       */
+/*   Updated: 2024/03/06 23:15:18 by amarouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,16 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 
 void	ft_here_dock(int argc, char **argv, int fd[2])
 {
+	int		pid;
 	char	*str;
 
 	str = NULL;
 	if (argc < 6)
 		(close_fd(fd), exit(EXIT_FAILURE));
-	if (fork() == 0)
+	pid = fork();
+	if (pid == -1)
+		exit(EXIT_FAILURE);
+	if (pid == 0)
 	{
 		while (1)
 		{

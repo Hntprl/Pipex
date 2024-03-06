@@ -8,7 +8,7 @@ RM = rm -f
 CRS = Mandatory/pipex.c Mandatory/pipex_utils.c Mandatory/ft_split.c \
 
 BCRS = Bonus/ft_split_bonus.c Bonus/pipex_bonus.c Bonus/pipex_utils_bonus.c \
-		Bonus/here_doc.c Bonus/get_next_line.c \
+		Bonus/here_doc.c Bonus/get_next_line.c Bonus/commandcheck.c \
 
 OCRS = $(CRS:.c=.o)
 BOCRS = $(BCRS:.c=.o)
