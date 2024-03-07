@@ -6,7 +6,7 @@
 /*   By: amarouf <amarouf@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 00:16:27 by amarouf           #+#    #+#             */
-/*   Updated: 2024/03/06 23:12:04 by amarouf          ###   ########.fr       */
+/*   Updated: 2024/03/07 16:44:00 by amarouf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,8 @@ void	ft_command1(char **argv, char **envp, int fd[2])
 	if (fl == -1)
 		exit(write(2, "can't open the file!\n", 21));
 	if (dup2(fd[1], 1) == -1 || dup2(fl, 0) == -1)
-		(exit(write(2, "dup2 failed!\n", 13)), close_fd(fd), close(fl));
-	close(fl);
-	close_fd(fd);
+		(close_fd(fd), close(fl), exit(write(2, "dup2 failed!\n", 13)));
+	(close(fl), close_fd(fd));
 	cmd = ft_split(argv[2], ' ');
 	if (!cmd[0])
 		(free(cmd), exit(write(2, "command not found!\n", 19)));
